@@ -21,3 +21,42 @@ function fibsRec(n, a = 0, b = 1, list = []) {
 
 console.log(fibs(8));
 console.log(fibsRec(8));
+
+function mergeSort(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const middle = Math.floor(arr.length / 2);
+  const leftHalf = arr.slice(0, middle);
+  const rightHalf = arr.slice(middle);
+
+  const sortedLeft = mergeSort(leftHalf);
+  const sortedRight = mergeSort(rightHalf);
+
+  return merge(sortedLeft, sortedRight);
+}
+
+function merge(left, right) {
+  const mergedArray = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
+
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] < right[rightIndex]) {
+      mergedArray.push(left[leftIndex]);
+      leftIndex++;
+    } else {
+      mergedArray.push(right[rightIndex]);
+      rightIndex++;
+    }
+  }
+
+  return mergedArray
+    .concat(left.slice(leftIndex))
+    .concat(right.slice(rightIndex));
+}
+
+const unsortedArray = [38, 27, 43, 3, 9, 82, 10];
+const sortedArray = mergeSort(unsortedArray);
+console.log(sortedArray);
